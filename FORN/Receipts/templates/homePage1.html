@@ -1,0 +1,123 @@
+<!DOCTYPE html >
+{% load static %}
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Книга рецептов</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="/static/css/default.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div id="wrapper">
+  <div id="header">
+
+    <div id="logo">
+
+      <h1><a href="#">forn</a></h1>
+      <h2>Еда как искусство</h2>
+    </div>
+    <!-- end div#logo -->
+  </div>
+  <!-- end div#header -->
+  <div id="menu">
+    <ul>
+      <li><a href="/..">Кухня</a></li>
+      <li class="active"><a href="/Receipts/">Книга рецептов</a></li>
+      <li><a href="/Master_class">Мастер классы</a></li>
+      <li><a href="#">Фудпривет</a></li>
+      {% if user.is_authenticated %}
+        <li><a href="/Menu">Персональное меню</a></li>
+        {% endif %}
+    </ul>
+  </div>
+  <!-- end div#menu -->
+  <div id="page">
+    <div id="page-bgtop">
+      <div id="content">
+        <div class="post">
+          {% block content %}
+    {% if all_receipts %}
+        {% for r in all_receipts %}
+          <h2 class="title"><a href="{% url 'Receipts:detail' r.id %}">{{r.receipt_title}}</a></h2>
+          <p class="byline">{{r.pub_date}}</p>
+
+        {% endfor %}
+
+    {% else %}
+        Рецепты не найдены
+    {% endif %}
+{% endblock %}
+
+        </div>
+      </div>
+      <!-- end div#content -->
+      <div id="sidebar">
+        <ul>
+            {% if user.is_authenticated %}
+            <li><a href="/Registration/logout">Выйти({{ user }})</a></li>
+            <li>{{ user }} Мой рейтинг - {% if user.profile.rating > 50%} супершеф
+              {% elif user.profile.rating > 40%} сушеф
+              {% elif user.profile.rating > 30%} профессиональный повар
+              {% elif user.profile.rating > 20%} обычный повар
+              {% elif user.profile.rating > 10 %} мальчик на побегушках
+              {% else} огузок
+              {% endif %}
+              </li>
+            {% else %}
+            <li><a href="/Registration/login">Войти</a></li>
+            <li><a href="/Registration/signup">Зарегистрироваться</a></li>
+            {% endif %}
+          <li>
+            <h2 class="categories">Lorem Ipsum</h2>
+            <ul>
+              {% if user.is_authenticated %}
+              <li><a href="new_receipt/">Создать свой рецепт</a></li>
+              {% endif %}
+              <li><a href="#">Eget tempor eget nonummy</a></li>
+              <li><a href="#">Magna lacus bibendum mauris</a></li>
+              <li><a href="#">Nec metus sed donec</a></li>
+              <li><a href="#">Magna lacus bibendum mauris</a></li>
+              <li><a href="#">Velit semper nisi molestie</a></li>
+              <li><a href="#">Eget tempor eget nonummy</a></li>
+            </ul>
+          </li>
+          <li>
+            <h2>Volutpat Dolore</h2>
+            <ul>
+              <li><a href="#">Nec metus sed donec</a></li>
+              <li><a href="#">Magna lacus bibendum mauris</a></li>
+              <li><a href="#">Velit semper nisi molestie</a></li>
+              <li><a href="#">Eget tempor eget nonummy</a></li>
+              <li><a href="#">Nec metus sed donec</a></li>
+              <li><a href="#">Magna lacus bibendum mauris</a></li>
+              <li><a href="#">Velit semper nisi molestie</a></li>
+            </ul>
+          </li>
+          <li>
+            <h2>Bebindum Mauris </h2>
+            <ul>
+              <li><a href="#">Nec metus sed donec</a></li>
+              <li><a href="#">Magna lacus bibendum mauris</a></li>
+              <li><a href="#">Velit semper nisi molestie</a></li>
+              <li><a href="#">Eget tempor eget nonummy</a></li>
+              <li><a href="#">Nec metus sed donec</a></li>
+              <li><a href="#">Velit semper nisi molestie</a></li>
+              <li><a href="#">Eget tempor eget nonummy</a></li>
+              <li><a href="#">Velit semper nisi molestie</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- end div#sidebar -->
+      <div style="clear: both; height: 1px"></div>
+    </div>
+  </div>
+  <!-- end div#page -->
+
+  <!-- end div#footer -->
+</div>
+<!-- end div#wrapper -->
+</body>
+</html>
